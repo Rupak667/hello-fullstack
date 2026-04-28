@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Monolith App</title>
+</head>
+<body>
+  <h1>Frontend served by backend ✅</h1>
+  <button onclick="check()">Check API</button>
+
+  <script>
+    function check() {
+      fetch("/api/health")
+        .then(res => res.json())
+        .then(data => alert(JSON.stringify(data)));
+    }
+  </script>
+</body>
+</html>

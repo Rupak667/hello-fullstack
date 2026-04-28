@@ -1,14 +1,22 @@
 const express = require("express");
-const cors = require("cors");
+const path = require("path");
 
 const app = express();
-app.use(cors());
+const PORT = process.env.PORT || 3000;
 
-app.get("/api", (req, res) => {
-  res.json({ message: "Hello World from Backend 👋" });
+/* Serve frontend */
+app.use(express.static(path.join(__dirname, "../frontend")));
+
+/* API example */
+app.get("/api/health", (req, res) => {
+  res.json({ status: "ok" });
 });
 
-const PORT = 5000;
+/* Fallback to frontend */
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "../frontend/index.html"));
+});
+
 app.listen(PORT, () => {
-  console.log(`Backend running on http://localhost:${PORT}`);
+  console.log(`Monolith running on port ${PORT}`);
 });
